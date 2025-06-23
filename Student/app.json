@@ -1,0 +1,71 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/index/index",
+    "pages/aiStudy/index",
+    "pages/learningReport/index",
+    "pages/studyRoom/index",
+    "pages/learning/index",
+    "pages/profile/index",
+    "pages/studyRoom/create/index",
+    "pages/studyRoom/detail/index",
+    "pages/chat/index",
+    "pages/logs/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1296db",
+    "navigationBarTitleText": "速智帮",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "page": {
+    "pages/chat/index": {
+      "navigationBarTitleText": "聊天"
+    }
+  },
+  "style": "v2",
+  "renderer": "webview",
+
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "assets/tabs/home.png",
+        "selectedIconPath": "assets/tabs/home-active.png"
+      },
+      {
+        "pagePath": "pages/studyRoom/index",
+        "text": "自习室",
+        "iconPath": "assets/tabs/study-room.png",
+        "selectedIconPath": "assets/tabs/study-room-active.png"
+      },
+      {
+        "pagePath": "pages/learning/index",
+        "text": "学习",
+        "iconPath": "assets/tabs/learning.png",
+        "selectedIconPath": "assets/tabs/learning-active.png"
+      },
+      {
+        "pagePath": "pages/aiStudy/index",
+        "text": "AI伴学",
+        "iconPath": "assets/tabs/ai-study.png",
+        "selectedIconPath": "assets/tabs/ai-study-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "assets/tabs/profile.png",
+        "selectedIconPath": "assets/tabs/profile-active.png"
+      }
+    ]
+  }
+}

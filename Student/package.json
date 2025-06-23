@@ -1,0 +1,19 @@
+{
+  "name": "trae-front-student",
+  "version": "1.0.0",
+  "description": "Trae Front Student Mini Program",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "miniprogram",
+    "wechat",
+    "education"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vant/weapp": "^1.10.19"
+  }
+}

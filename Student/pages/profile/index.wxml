@@ -1,0 +1,37 @@
+<!--pages/profile/index.wxml-->
+<view class="profile-container">
+  <!-- 用户信息区域 -->
+  <view class="user-info-header">
+    <image class="avatar" src="{{ userInfo.avatarUrl || '/assets/icons/default-avatar.png' }}" mode="aspectFill"></image>
+    <view class="user-details">
+      <text class="nickname">{{ userInfo.nickName || '微信用户' }}</text>
+      <text class="user-id">ID: {{ userInfo.userId || '加载中...' }}</text>
+    </view>
+    <!-- <van-icon name="setting-o" size="24px" color="#fff" class="settings-icon" bind:click="navigateToSettings" /> -->
+  </view>
+
+  <!-- 统计/快捷操作区域 -->
+  <view class="stats-area">
+    <van-grid column-num="3" border="{{ false }}" clickable>
+      <van-grid-item icon="star-o" text="老师收藏" bind:click="navigateToFavorites" />
+      <van-grid-item icon="description" text="资料收藏" bind:click="navigateToMaterials" />
+      <van-grid-item icon="todo-list-o" text="错题本" bind:click="navigateToMistakes" />
+    </van-grid>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-section">
+    <van-cell-group inset title="学习工具">
+      <van-cell title="学习报告" is-link bind:click="navigateToLearningReport" icon="chart-trending-o" />
+      <van-cell title="薄弱点笔记" is-link bind:click="navigateToWeaknessNotebook" icon="records" />
+    </van-cell-group>
+
+    <van-cell-group inset title="账户与设置" style="margin-top: 20rpx;">
+      <van-cell title="账户信息" is-link bind:click="navigateToAccountInfo" icon="user-o" />
+      <van-cell title="设置" is-link bind:click="navigateToSettingsPlaceholder" icon="setting-o" />
+      <van-cell title="关于我们" is-link bind:click="navigateToAbout" icon="info-o" />
+    </van-cell-group>
+  </view>
+
+  <van-toast id="van-toast" />
+</view>
