@@ -1,0 +1,258 @@
+.home-container {
+  background-color: #f4f8fb;
+  min-height: 100vh;
+  padding: 0; /* 确保容器本身没有左右padding */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 确保容器占满视口高度 */
+  width: 100vw; /* 确保容器宽度占满视口宽度 */
+  overflow-x: hidden; /* 防止意外的水平滚动条 */
+}
+
+/* 顶部整体区域 */
+.top-section {
+  width: 100%; /* 确保top-section也占满宽度 */
+ 
+}
+
+/* 滚动播报区域 */
+.announcement-swiper {
+  width: 100%; /* 确保宽度占满父容器 */
+  height: 22vh; /* 调整为视口高度的22% */
+  background-color: #e6f2ff; /* 淡蓝色背景 */
+  /* 移除可能存在的左右 margin 或 padding，确保全宽 */
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.announcement-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+}
+
+.announcement-text-horizontal {
+  font-size: 30rpx; /* 稍大字体 */
+  color: #1296db; /* 播报文字颜色 */
+  padding: 0 30rpx; /* 文本内容的左右留白，不影响swiper本身宽度 */
+  text-align: center;
+  box-sizing: border-box; /* 确保padding不增加实际宽度 */
+  width: 100%; /* 文本容器也占满swiper-item */
+}
+
+/* 顶部功能区 */
+.function-area {
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  margin: 20rpx 10rpx; /* 上下外边距缩小，左右外边距增大 */
+  padding: 1rpx 0; /* 上下内边距进一步缩小 */
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.05);
+}
+
+.function-area .van-grid-item__content {
+  padding: 5rpx 0 !important; /* 进一步调整宫格内边距 */
+}
+
+.function-area .van-icon {
+  font-size: 48rpx !important; /* 调整图标大小 */
+  color: #1296db; /* 图标颜色 */
+}
+
+.function-area .van-grid-item__text {
+  font-size: 24rpx !important; /* 调整文字大小 */
+  margin-top: 8rpx;
+  color: #333;
+}
+
+/* 动态信息流 */
+.feed-area {
+  flex: 1; /* 占据剩余空间 */
+  background-color: #ffffff;
+  overflow: hidden; /* 配合sticky tabs */
+  display: flex;
+  flex-direction: column;
+  height: 0; /* 配合flex:1 使其高度自适应剩余空间 */
+}
+
+.feed-area .van-tabs__wrap {
+  border-bottom: 1rpx solid #ebedf0;
+  width: 100%; /* 确保宽度占满 */
+  box-sizing: border-box; /* 确保padding不增加实际宽度 */
+}
+
+.feed-area .van-tabs__nav {
+  display: flex; /* 使用flex布局 */
+  width: 100%; /* 占满父容器宽度 */
+  padding: 0;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden; /* 确保内容不溢出 */
+  /* 移除 justify-content: space-around; flex:1 在子元素上应能处理均分 */
+}
+
+.feed-area .van-tab {
+  width: 33.33% !important; /* 强制固定宽度 */
+  flex: none !important; /* 禁用flex布局影响 */
+  text-align: center;
+  padding: 0 10rpx;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feed-area .van-tabs__content {
+  flex: 1;
+  overflow: hidden; /* 确保内容区域可以独立滚动 */
+  width: 100%; /* 确保内容区域宽度占满 */
+  box-sizing: border-box;
+  height: 100%; /* 确保内容区域高度占满，以便scroll-view的百分比高度生效 */
+  display: flex; /* 添加flex布局 */
+  flex-direction: column; /* 设置为纵向排列 */
+}
+
+.feed-scroll-view {
+  overflow-y: auto;
+  height: auto; /* 修改为auto，使其能够根据内容自动调整高度 */
+  max-height: 100%; /* 添加最大高度限制，确保不会超出父容器 */
+  box-sizing: border-box;
+  width: 100%; /* 确保宽度占满 */
+  flex: 1; /* 添加flex:1使其能够占据剩余空间 */
+}
+
+.question-list,
+.notification-list {
+  padding: 20rpx; /* 列表内容区域的内边距 */
+  width: 100%; /* 确保宽度占满 */
+  box-sizing: border-box;
+}
+
+/* Tab 选中下划线颜色 */
+.feed-area .van-tabs__line {
+  background-color: #1296db !important; /* 主题蓝色 */
+}
+
+/* Tab 激活文字颜色 */
+.feed-area .van-tab--active .van-ellipsis{
+  color: #1296db !important; /* 主题蓝色 */
+}
+
+/* 删除重复的样式定义，保留上面已修改过的样式 */
+/* 以下重复的样式定义将被删除
+.feed-area .van-tabs__content {
+  flex: 1;
+  overflow: hidden; 
+}
+
+.feed-scroll-view {
+  overflow-y:auto;
+  height: 100%; 
+  box-sizing: border-box;
+}
+*/
+
+.question-list,
+.notification-list {
+  padding: 20rpx; /* 列表内容区域的内边距 */
+  /* padding-top: 0; */ /* 如果tabs有offset-top，这里可能不需要额外padding */
+}
+
+.question-list .van-card {
+  margin-bottom: 20rpx;
+  background-color: #fff; /* 卡片背景色 */
+  border-radius: 12rpx;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.04);
+}
+
+.question-list .van-card__thumb image {
+  border-radius: 8rpx;
+}
+
+.question-list .van-card__title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.question-list .van-card__desc {
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 8rpx;
+}
+
+.question-list .van-tag {
+  margin-right: 8rpx;
+}
+
+.question-list .van-button--small {
+  background-color: #1296db; /* 主题蓝色 */
+  border-color: #1296db; /* 主题蓝色 */
+  color: #ffffff;
+}
+
+.notification-list .van-cell-group {
+  margin: 0 -20rpx; /* 抵消父级padding，让cell撑满 */
+}
+
+.notification-list .van-cell {
+  padding: 24rpx 20rpx; /* 调整内边距 */
+  border-bottom: 1rpx solid #f7f7f7;
+}
+
+.notification-list .van-cell:last-child {
+  border-bottom: none;
+}
+
+.notification-list .van-cell__title {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.notification-list .van-cell__label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.loading-indicator,
+.no-more-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20rpx 0;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.loading-indicator .van-loading__text {
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 10rpx;
+}
+
+.grid-icon {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+/* 确保页面整体可滚动，如果内容超出 */
+page {
+  height: 100%;
+}
+
+/* 移除原有的 .container padding，因为 home-container 已经处理 */
+.container {
+  /* padding: 20rpx; */ /* 已被 .home-container 覆盖或不再需要 */
+  background-color: #f4f8fb; /* 淡蓝色背景 */
+  min-height: 100vh;
+}

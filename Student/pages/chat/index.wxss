@@ -1,0 +1,130 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.chat-header {
+  padding: 10px;
+  text-align: center;
+  background-color: #007aff;
+  color: white;
+  font-size: 18px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.message-list {
+  flex-grow: 1;
+  padding: 80px 10px 70px; /* 顶部留出header空间，底部留出input-area空间 */
+  overflow-y: auto;
+}
+
+.message-item {
+  display: flex;
+  margin-bottom: 15px;
+  align-items: flex-start; /* 头像和气泡顶部对齐 */
+}
+
+.my-message {
+  flex-direction: row-reverse; /* 我的消息靠右 */
+}
+
+.avatar {
+  width: 36px; /* 缩小头像尺寸 */
+  height: 36px;
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.my-message .message-content {
+  align-items: flex-end; /* 我的消息内容靠右 */
+}
+
+.other-message .message-content {
+  align-items: flex-start; /* 对方消息内容靠左 */
+}
+
+.nickname {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 4px;
+  margin-left: 5px; /* 对方昵称左边距 */
+}
+
+.my-message .nickname {
+  margin-right: 5px; /* 我的昵称（如果显示）右边距 */
+}
+
+.text-bubble {
+  padding: 10px 15px;
+  border-radius: 18px;
+  font-size: 16px;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.my-message .text-bubble {
+  background-color: #007aff;
+  color: white;
+  border-top-right-radius: 5px; /* 我的气泡样式 */
+}
+
+.other-message .text-bubble {
+  background-color: #ffffff;
+  color: #333;
+  border-top-left-radius: 5px; /* 对方气泡样式 */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px; /* 调整内边距 */
+  background-color: #f9f9f9;
+  border-top: 1px solid #e0e0e0;
+  position: fixed;
+  width: calc(100% - 20px); /* 减去左右padding */
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.input-field {
+  flex-grow: 1;
+  height: 38px; /* 略微减小输入框高度 */
+  padding: 0 12px;
+  border: 1px solid #ddd;
+  border-radius: 19px; /* 配合高度调整 */
+  margin-right: 8px; /* 调整与发送按钮的间距 */
+  font-size: 15px;
+}
+
+.send-button {
+  width: 60px; /* 缩小发送按钮宽度 */
+  height: 38px; /* 匹配输入框高度 */
+  line-height: 38px;
+  text-align: center;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 19px; /* 匹配高度调整 */
+  font-size: 15px; /* 略微减小字体 */
+  padding: 0; /* 移除默认padding */
+  margin-left: auto; /* 确保按钮在右侧，如果input-field不是flex-grow:1 */
+}
+
+.send-button:active {
+  background-color: #005bb5;
+}

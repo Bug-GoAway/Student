@@ -1,0 +1,310 @@
+<navigation-bar title="速智帮" background="#1296db" back="{{false}}" homeButton="{{false}}"></navigation-bar>
+<view class="container home-container">
+  <!-- 顶部整体区域 -->
+  <view class="top-section">
+    <!-- 滚动播报区 -->
+    <swiper class="announcement-swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000" duration="500" circular="{{true}}" vertical="{{false}}" indicator-color="rgba(0, 0, 0, .3)" indicator-active-color="#1296db">
+      <swiper-item wx:for="{{announcements}}" wx:key="index" class="announcement-item">
+        <!-- 如果是图片轮播，可以使用 image 标签 -->
+        <!-- <image src="{{item.imageUrl}}" class="swiper-image" mode="aspectFill"/> -->
+        <view class="announcement-text-horizontal">{{item.text}}</view> 
+      </swiper-item>
+    </swiper>
+
+    <!-- 顶部功能区 -->
+    <view class="function-area">
+      <van-grid column-num="4" border="{{ false }}" square clickable>
+        <van-grid-item use-slot text="拍照搜题" bind:click="navigateToPage" data-url="/pages/searchByImage/index"> 
+          <image slot="icon" src="/assets/icons/placeholder-icon.png" class="grid-icon" />
+        </van-grid-item>
+        <van-grid-item use-slot text="名师讲题" bind:click="navigateToPage" data-url="/pages/expertLecture/index"> 
+          <image slot="icon" src="/assets/icons/placeholder-icon.png" class="grid-icon" />
+        </van-grid-item>
+        <van-grid-item use-slot text="作业批改" bind:click="navigateToPage" data-url="/pages/homeworkCorrection/index"> 
+          <image slot="icon" src="/assets/icons/placeholder-icon.png" class="grid-icon" />
+        </van-grid-item>
+        <van-grid-item use-slot text="学情报告" bind:click="navigateToPage" data-url="/pages/learningReport/index">
+          <image slot="icon" src="/assets/icons/placeholder-icon.png" class="grid-icon" />
+        </van-grid-item>
+      </van-grid>
+    </view>
+  </view>
+
+  <!-- 动态信息流 -->
+  <view class="feed-area">
+    <van-tabs active="{{ activeTab }}" bind:change="onTabChange" sticky animated swipeable color="#1296db" offset-top="{{ tabsOffsetTop }}">
+      <van-tab title="推荐解答">
+        <scroll-view scroll-y class="feed-scroll-view" bindscrolltolower="loadMoreRecommendData">
+          <view class="question-list">
+            <van-card
+              wx:for="{{ recommendList }}"
+              wx:key="id"
+              title="{{ item.title }}"
+              desc="{{ item.description }}"
+              thumb="{{ item.thumb || '/assets/images/default-thumb.png' }}"
+              thumb-mode="aspectFit"
+              bind:click="viewDetail" data-item="{{item}}"
+            >
+              <view slot="tags">
+                <van-tag plain type="primary" wx:if="{{item.subject}}">{{item.subject}}</van-tag>
+                <van-tag plain type="danger" wx:if="{{item.grade}}" style="margin-left: 5px;">{{item.grade}}</van-tag>
+              </view>
+              <view slot="footer">
+                <van-button size="small" type="info" plain>查看详情</van-button>
+              </view>
+            </van-card>
+            <van-empty wx:if="{{!recommendIsLoading && recommendList.length === 0 && !recommendHasMore}}" description="暂无推荐内容" />
+            <view class="loading-indicator" wx:if="{{recommendIsLoading}}">
+              <van-loading size="24px">加载中...</van-loading>
+            </view>
+            <view class="no-more-indicator" wx:if="{{!recommendIsLoading && recommendList.length > 0 && !recommendHasMore}}">
+              <text>--- 没有更多了 ---</text>
+            </view>
+            <!-- 演示内容 -->
+            <view wx:if="{{recommendList.length === 0}}">
+              <van-card
+                title="演示推荐解答 1"
+                desc="这是一个关于数学问题的推荐解答，详细解释了代数方程的解法。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="primary">数学</van-tag>
+                  <van-tag plain type="danger" style="margin-left: 5px;">初三</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示推荐解答 2"
+                desc="物理实验报告：如何测量物体的密度，包含详细步骤和注意事项。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="primary">物理</van-tag>
+                  <van-tag plain type="danger" style="margin-left: 5px;">高一</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示推荐解答 3"
+                desc="化学方程式配平技巧：从入门到精通，掌握常见化学反应的配平方法。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="primary">化学</van-tag>
+                  <van-tag plain type="danger" style="margin-left: 5px;">高二</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示推荐解答 4"
+                desc="生物细胞结构详解：带你深入了解细胞的奥秘，包括细胞器功能和细胞生命活动。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="primary">生物</van-tag>
+                  <van-tag plain type="danger" style="margin-left: 5px;">高一</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示推荐解答 5"
+                desc="英语语法精讲：动词时态的运用，助你轻松掌握现在完成时、过去完成时等。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="primary">英语</van-tag>
+                  <van-tag plain type="danger" style="margin-left: 5px;">初二</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+            </view>
+          </view>
+        </scroll-view>
+      </van-tab>
+
+      <van-tab title="热门问题">
+        <scroll-view scroll-y class="feed-scroll-view" bindscrolltolower="loadMoreHotData">
+          <view class="question-list">
+            <van-card
+              wx:for="{{ hotList }}"
+              wx:key="id"
+              title="{{ item.title }}"
+              desc="{{ item.description }}"
+              thumb="{{ item.thumb || '/assets/images/default-thumb.png' }}"
+              thumb-mode="aspectFit"
+              bind:click="viewDetail" data-item="{{item}}"
+            >
+               <view slot="tags">
+                <van-tag plain type="warning">热</van-tag>
+              </view>
+              <view slot="footer">
+                <van-button size="small" type="info" plain>查看详情</van-button>
+              </view>
+            </van-card>
+            <van-empty wx:if="{{!hotIsLoading && hotList.length === 0 && !hotHasMore}}" description="暂无热门问题" />
+            <view class="loading-indicator" wx:if="{{hotIsLoading}}">
+              <van-loading size="24px">加载中...</van-loading>
+            </view>
+            <view class="no-more-indicator" wx:if="{{!hotIsLoading && hotList.length > 0 && !hotHasMore}}">
+              <text>--- 没有更多了 ---</text>
+            </view>
+            <!-- 演示内容 -->
+            <view wx:if="{{hotList.length === 0}}">
+              <van-card
+                title="演示热门问题 1: 为什么天空是蓝色的？"
+                desc="这是一个关于光学和大气散射的常见问题，解释了瑞利散射的原理。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="warning">热门</van-tag>
+                  <van-tag plain type="primary" style="margin-left: 5px;">科学</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示热门问题 2: 历史上的三大改革是什么？"
+                desc="探讨中国历史上影响深远的三次重大改革，包括商鞅变法、王安石变法和戊戌变法。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="warning">热门</van-tag>
+                  <van-tag plain type="primary" style="margin-left: 5px;">历史</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示热门问题 3: 宇宙大爆炸理论的证据有哪些？"
+                desc="深入探讨支持宇宙大爆炸理论的关键证据，如宇宙微波背景辐射、星系红移等。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="warning">热门</van-tag>
+                  <van-tag plain type="primary" style="margin-left: 5px;">宇宙</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示热门问题 4: 人工智能的未来发展趋势？"
+                desc="分析人工智能在未来几年可能的发展方向，包括机器学习、深度学习和自然语言处理。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="warning">热门</van-tag>
+                  <van-tag plain type="primary" style="margin-left: 5px;">科技</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+              <van-card
+                title="演示热门问题 5: 如何有效提高学习效率？"
+                desc="分享多种科学的学习方法和技巧，帮助学生提高学习效率，包括番茄工作法、费曼技巧等。"
+                thumb="/assets/images/default-thumb.png"
+                thumb-mode="aspectFit"
+              >
+                <view slot="tags">
+                  <van-tag plain type="warning">热门</van-tag>
+                  <van-tag plain type="primary" style="margin-left: 5px;">学习</van-tag>
+                </view>
+                <view slot="footer">
+                  <van-button size="small" type="info" plain>查看详情</van-button>
+                </view>
+              </van-card>
+            </view>
+          </view>
+        </scroll-view>
+      </van-tab>
+      
+      <van-tab title="系统通知">
+        <scroll-view scroll-y class="feed-scroll-view">
+          <view class="notification-list">
+            <van-cell-group inset>
+              <van-cell
+                wx:for="{{ notificationList }}"
+                wx:key="id"
+                title="{{ item.title }}"
+                label="{{ item.time }}"
+                is-link
+                url="{{item.url}}"
+              />
+            </van-cell-group>
+            <van-empty wx:if="{{notificationList.length === 0}}" description="暂无通知" />
+            <!-- 演示内容 -->
+            <view wx:if="{{notificationList.length === 0}}">
+              <van-cell-group inset>
+                <van-cell
+                  title="系统更新通知"
+                  label="2023-10-26 10:00"
+                  is-link
+                  url="/pages/notificationDetail/index?id=1"
+                />
+                <van-cell
+                  title="新功能上线预告"
+                  label="2023-10-25 15:30"
+                  is-link
+                  url="/pages/notificationDetail/index?id=2"
+                />
+                <van-cell
+                  title="账户安全提醒"
+                  label="2023-10-24 09:00"
+                  is-link
+                  url="/pages/notificationDetail/index?id=3"
+                />
+                <van-cell
+                  title="服务维护通知"
+                  label="2023-10-23 23:00"
+                  is-link
+                  url="/pages/notificationDetail/index?id=4"
+                />
+                <van-cell
+                  title="隐私政策更新"
+                  label="2023-10-22 18:00"
+                  is-link
+                  url="/pages/notificationDetail/index?id=5"
+                />
+                <van-cell
+                  title="积分活动通知"
+                  label="2023-10-21 12:00"
+                  is-link
+                  url="/pages/notificationDetail/index?id=6"
+                />
+                <van-cell
+                  title="新课程推荐"
+                  label="2023-10-20 10:00"
+                  is-link
+                  url="/pages/notificationDetail/index?id=7"
+                />
+              </van-cell-group>
+            </view>
+          </view>
+        </scroll-view>
+      </van-tab>
+    </van-tabs>
+  </view>
+  <van-toast id="van-toast" />
+</view>

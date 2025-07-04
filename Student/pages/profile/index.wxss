@@ -1,0 +1,96 @@
+/* pages/profile/index.wxss */
+.profile-container {
+  background-color: #f4f8fb;
+  min-height: 100vh;
+  padding-bottom: 20rpx; /* 为底部留出空间，特别是当有自定义tabbar时 */
+}
+
+.user-info-header {
+  display: flex;
+  align-items: center;
+  padding: 50rpx 40rpx;
+  background-color: #1296db;
+  color: #ffffff;
+  position: relative;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.user-id {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.settings-icon {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+}
+
+.stats-area {
+  margin: -30rpx 30rpx 30rpx; /* 向上偏移，部分覆盖头部背景，左右留白 */
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  padding: 10rpx 0; /* 给grid内部一些空间 */
+}
+
+.stats-area .van-grid-item__content {
+  padding: 20rpx 0 !important;
+}
+
+.stats-area .van-grid-item__text {
+  font-size: 26rpx !important;
+  color: #333;
+}
+
+.stats-area .van-icon {
+  font-size: 48rpx !important;
+  color: #1296db;
+}
+
+.menu-section {
+  padding: 0 30rpx; /* 菜单区域左右留白 */
+}
+
+.menu-section .van-cell-group--inset {
+  margin: 0 0 20rpx 0 !important; /* 移除Vant默认的左右margin，因为父级已处理 */
+}
+
+.menu-section .van-cell {
+  padding-top: 28rpx !important;
+  padding-bottom: 28rpx !important;
+}
+
+.menu-section .van-cell__title {
+  font-size: 30rpx;
+  color: #333;
+}
+
+.menu-section .van-cell__left-icon-wrap {
+  color: #1296db; /* 统一图标颜色 */
+  font-size: 36rpx !important; /* 调整图标大小 */
+  margin-right: 20rpx;
+}
+
+/* 确保页面整体可滚动，如果内容超出 */
+page {
+  background-color: #f4f8fb; /* 确保页面背景色一致 */
+}
