@@ -1,0 +1,53 @@
+<!--pages/learning/index.wxml-->
+<view class="learning-container">
+  <!-- 消息列表区域 -->
+  <scroll-view scroll-y="true" class="message-list" bindscrolltolower="onReachBottom" 
+               refresher-enabled="true" bindrefresherrefresh="onPullDownRefresh">
+    <block wx:if="{{messages.length > 0}}">
+      <view wx:for="{{messages}}" wx:key="id" class="message-item"
+            bindtap="navigateToChat" data-chatid="{{item.id}}" data-sender="{{item.sender}}">
+        <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+        <view class="message-info">
+          <view class="sender-time">
+            <text class="sender">{{item.sender}}</text>
+            <text class="time">{{item.time}}</text>
+          </view>
+          <text class="preview">{{item.preview}}</text>
+        </view>
+        <view class="unread-badge" wx:if="{{item.unreadCount > 0}}">
+          {{item.unreadCount > 99 ? '99+' : item.unreadCount}}
+        </view>
+      </view>
+      <!-- 加载更多提示 -->
+      <view class="load-more-hint" wx:if="{{isLoadingMore}}">正在加载...</view>
+      <view class="load-more-hint" wx:if="{{!hasMoreMessages && messages.length > 0}}">没有更多消息了</view>
+    </block>
+    <block wx:else>
+      <view class="empty-state">
+        <image class="empty-icon" src="/assets/images/empty-messages.png"></image> <!-- 替换为实际的空状态图片 -->
+        <text class="empty-text">暂无新消息</text>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 作业讲解提问入口 - 可滑动面板 -->
+  <!-- togglePanel方法现在由tabBar的特殊按钮触发，但面板的显示状态 (isPanelOpen) 仍由此页面的JS控制 -->
+  <view class="slide-panel {{isPanelOpen ? 'panel-open' : ''}}">
+    <view class="panel-handle" bindtap="togglePanel"> <!-- 用户仍可点击此区域关闭面板 -->
+      <view class="handle-bar"></view>
+    </view>
+    <view class="panel-content">
+      <view class="ask-options">
+        <view class="option-button" bindtap="handlePanelOption" data-type="photo">
+          <image src="/assets/icons/camera-blue.png"></image> 
+          <text>拍照提问</text>
+        </view>
+        <view class="option-button" bindtap="handlePanelOption" data-type="text">
+          <image src="/assets/icons/text-edit-blue.png"></image> 
+          <text>文字提问</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 旧的悬浮按钮已移除 -->
+</view>

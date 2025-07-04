@@ -1,0 +1,31 @@
+<!--pages/learningReport/index.wxml-->
+<view class="container">
+  <view class="header">
+    <text class="title">{{reportTitle}}</text>
+  </view>
+  <view class="content">
+    <text class="summary">{{summary}}</text>
+    <!-- 更多学情报告内容 -->
+    <view class="data-section">
+      <text class="section-title">学习数据概览</text>
+      <view class="data-item">
+        <text class="data-label">累计学习时长:</text>
+        <text class="data-value">N/A</text>
+      </view>
+      <view class="data-item">
+        <text class="data-label">完成任务数:</text>
+        <text class="data-value">N/A</text>
+      </view>
+      <view class="data-item">
+        <text class="data-label">平均正确率:</text>
+        <text class="data-value">N/A</text>
+      </view>
+    </view>
+    <view class="chart-placeholder">
+      <text>图表区域（待实现）</text>
+    </view>
+  </view>
+  <view class="footer">
+    <button class="share-button" type="primary" plain="true">分享报告</button>
+  </view>
+</view>

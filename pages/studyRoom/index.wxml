@@ -1,0 +1,88 @@
+<navigation-bar title="自习室" background="#1296db" color="#ffffff" back="false" home-button="false"></navigation-bar>
+<view class="container">
+
+
+  <scroll-view scroll-y class="main-content-scroll">
+    <!-- 我的自习室 -->
+    <view class="room-section">
+      <view class="section-header">
+      </view>
+      <view class="button-group">
+        <van-button size="small" type="primary" icon="plus" bindtap="onCreateStudyRoom" round custom-class="header-action-btn">创建</van-button>
+        <van-button size="small" icon="search" bindtap="onJoinStudyRoom" round custom-class="header-action-btn join-btn-custom">加入</van-button>
+      </view>
+      <view class="room-grid" wx:if="{{myStudyRooms.length > 0}}">
+        <view class="room-card-item" wx:for="{{myStudyRooms}}" wx:key="id" bindtap="enterStudyRoom" data-roomid="{{item.id}}">
+          <image class="room-cover" src="{{item.cover || '/assets/images/default-room-cover.png'}}" mode="aspectFill"></image>
+          <view class="room-info">
+            <text class="room-name">{{item.name}}</text>
+            <view class="room-tags">
+              <van-tag plain type="{{item.isSupervised ? 'danger' : 'primary'}}" size="mini">{{item.isSupervised ? '监督' : '无监督'}}</van-tag>
+              <van-tag plain size="mini" style="margin-left: 5px;">{{item.memberCount}}人</van-tag>
+            </view>
+          </view>
+        </view>
+      </view>
+      <van-empty wx:else description="暂未加入或创建任何自习室" image-size="80" />
+    </view>
+
+    <!-- 推荐自习室 -->
+    <view class="room-section">
+      <view class="section-header">
+        <text class="section-title">发现更多自习室</text>
+        <!-- <van-button size="small" plain type="info" round custom-class="header-action-btn">查看全部</van-button> -->
+      </view>
+      <view class="room-grid" wx:if="{{recommendedStudyRooms.length > 0}}">
+        <view class="room-card-item" wx:for="{{recommendedStudyRooms}}" wx:key="id" bindtap="enterStudyRoom" data-roomid="{{item.id}}">
+          <image class="room-cover" src="{{item.cover || '/assets/images/default-room-cover.png'}}" mode="aspectFill"></image>
+          <view class="room-info">
+            <text class="room-name">{{item.name}}</text>
+            <view class="room-tags">
+              <van-tag plain type="{{item.isSupervised ? 'danger' : 'primary'}}" size="mini">{{item.isSupervised ? '监督' : '无监督'}}</van-tag>
+              <van-tag plain size="mini" style="margin-left: 5px;">{{item.memberCount}}人</van-tag>
+            </view>
+          </view>
+        </view>
+      </view>
+      <van-empty wx:else description="暂无推荐的自习室" image-size="80" />
+    </view>
+  </scroll-view>
+
+  <!-- 创建自习室弹窗 -->
+  <van-dialog
+    use-slot
+    title="创建自习室"
+    show="{{ showCreateRoomDialog }}"
+    show-cancel-button
+    confirm-button-color="#1296db"
+    bind:confirm="confirmCreateStudyRoom"
+    bind:cancel="cancelCreateStudyRoom"
+    custom-class="create-room-dialog"
+  >
+    <van-field
+      label="名称"
+      value="{{ newRoomName }}"
+      placeholder="请输入自习室名称 (必填)"
+      bind:input="onNewRoomNameInput"
+      clearable
+      required
+      focus
+      maxlength="20"
+    />
+    <van-field
+      label="描述"
+      value="{{ newRoomDesc }}"
+      type="textarea"
+      placeholder="请输入自习室描述 (选填，最多50字)"
+      bind:input="onNewRoomDescInput"
+      autosize
+      maxlength="50"
+    />
+    <view class="dialog-switch-row">
+        <text>开启学习监督</text>
+        <van-switch checked="{{ newRoomIsSupervised }}" bind:change="onNewRoomSupervisedChange" size="22px" active-color="#1296db" />
+    </view>
+  </van-dialog>
+
+  <van-toast id="van-toast" />
+</view>
