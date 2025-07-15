@@ -1,4 +1,10 @@
 {
   "navigationBarTitleText": "学情报告",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-icon": "@vant/weapp/icon/index",
+    "van-tag": "@vant/weapp/tag/index",
+    "van-button": "@vant/weapp/button/index",
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "ec-canvas": "./echarts-for-weixin/ec-canvas/ec-canvas"
+  }
 }
