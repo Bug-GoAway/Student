@@ -1,18 +1,6 @@
+<!-- 修改后的 WXML 文件 -->
 <navigation-bar title="AI伴学" background="#1296db" color="#ffffff" back="false" home-button="false"></navigation-bar>
 <view class="ai-study-page">
-  <!-- 艾宾浩斯遗忘曲线展示区 -->
-  <view class="ebbinghaus-area">
-    <view class="area-title-wrapper">
-      <image class="area-title-icon" src="/assets/icons/curve-icon.png"></image>
-      <text class="area-title">艾宾浩斯记忆曲线</text>
-    </view>
-    <view class="ebbinghaus-chart-placeholder">
-      <!-- 此处未来可以集成图表库展示曲线 -->
-      <image class="placeholder-image" src="/assets/images/ebbinghaus-placeholder.png" mode="widthFix"></image>
-      <text class="placeholder-text">今日复习任务：数学函数（3个知识点）</text>
-    </view>
-  </view>
-
   <!-- 学情报告入口 -->
   <view class="report-entry-area card-style" bindtap="navigateToLearningReport">
     <view class="entry-left">

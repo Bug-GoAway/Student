@@ -1,6 +1,7 @@
+/* 修改后的 WXSS 文件 */
 .container {
   padding: 20rpx;
-  background-color: #f4f8fb; /* 淡蓝色背景 */
+  background-color: #f4f8fb;
   min-height: 100vh;
 }
 
@@ -28,34 +29,6 @@
   font-size: 32rpx;
   font-weight: bold;
   color: #333;
-}
-
-/* 艾宾浩斯遗忘曲线 */
-.ebbinghaus-area {
-  width: 100%;
-  background-color: #ffffff;
-  border-radius: 16rpx;
-  margin-bottom: 24rpx;
-  padding: 20rpx，20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-}
-
-.ebbinghaus-chart-placeholder {
-  text-align: center;
-  padding: 20rpx 0;
-}
-
-.placeholder-image {
-  width: 80%;
-  max-width: 500rpx;
-  margin-bottom: 20rpx;
-  border-radius: 8rpx;
-  background-color: #e9f3fd; /* 淡蓝色占位背景 */
-}
-
-.placeholder-text {
-  font-size: 26rpx;
-  color: #1296db; /* 主题蓝色 */
 }
 
 /* 学情报告入口 */
@@ -95,20 +68,20 @@
 }
 
 .entry-arrow {
-  color: #c8c9cc; /* Vant灰色 */
+  color: #c8c9cc;
   font-size: 32rpx !important;
 }
 
 /* 错题变式训练区 */
 .practice-area .area-title-wrapper {
-  padding: 0 10rpx; /*  slight padding for title if not in a card */
+  padding: 0 10rpx;
 }
 
 .practice-list .practice-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20rpx; /* Spacing between items */
+  margin-bottom: 20rpx;
 }
 
 .practice-item:last-child {
@@ -144,8 +117,8 @@
 }
 
 .practice-button.van-button--small {
-  background-color: #1296db !important; /* 主题蓝色 */
-  border-color: #1296db !important; /* 主题蓝色 */
+  background-color: #1296db !important;
+  border-color: #1296db !important;
   color: #ffffff !important;
   padding: 0 24rpx !important; 
   height: 56rpx !important;

@@ -1,31 +1,101 @@
-<!--pages/learningReport/index.wxml-->
+<navigation-bar title="学情报告" background="#1296db" color="#ffffff" back="true" home-button="false"></navigation-bar>
+
 <view class="container">
-  <view class="header">
-    <text class="title">{{reportTitle}}</text>
+  <!-- 标签切换栏 -->
+  <view class="tabs-container">
+    <scroll-view class="tabs" scroll-x="true" scroll-with-animation>
+      <view class="tab-row">
+        <view 
+          class="tab {{currentTab === 'overall' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="overall"
+        >总评</view>
+        <view 
+          class="tab {{currentTab === 'chinese' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="chinese"
+        >语文</view>
+        <view 
+          class="tab {{currentTab === 'math' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="math"
+        >数学</view>
+        <view 
+          class="tab {{currentTab === 'english' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="english"
+        >英语</view>
+        <view 
+          class="tab {{currentTab === 'physics' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="physics"
+        >物理</view>
+        <view 
+          class="tab {{currentTab === 'chemistry' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="chemistry"
+        >化学</view>
+        <view 
+          class="tab {{currentTab === 'biology' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="biology"
+        >生物</view>
+      </view>
+    </scroll-view>
   </view>
-  <view class="content">
-    <text class="summary">{{summary}}</text>
-    <!-- 更多学情报告内容 -->
-    <view class="data-section">
-      <text class="section-title">学习数据概览</text>
-      <view class="data-item">
-        <text class="data-label">累计学习时长:</text>
-        <text class="data-value">N/A</text>
-      </view>
-      <view class="data-item">
-        <text class="data-label">完成任务数:</text>
-        <text class="data-value">N/A</text>
-      </view>
-      <view class="data-item">
-        <text class="data-label">平均正确率:</text>
-        <text class="data-value">N/A</text>
+
+  <!-- 雷达图卡片 -->
+  <view class="chart-card">
+    <view class="chart-header">
+      <view>
+        <view class="chart-title">{{chartTitle}}</view>
+        <view class="chart-subtitle">基于最近30天的学习数据评估</view>
       </view>
     </view>
-    <view class="chart-placeholder">
-      <text>图表区域（待实现）</text>
+    <view class="chart-container">
+      <ec-canvas id="mychart-dom-radar" canvas-id="mychart-radar" ec="{{ec}}"></ec-canvas>
     </view>
   </view>
-  <view class="footer">
-    <button class="share-button" type="primary" plain="true">分享报告</button>
+
+  <!-- 学习数据统计区 -->
+  <view class="stats-container">
+    <view class="stat-card">
+      <view class="stat-icon">
+        <image src="/assets/icons/clock-solid.svg" mode="aspectFit" class="icon"></image>
+      </view>
+      <view class="stat-value">128小时</view>
+      <view class="stat-label">累计学习时长</view>
+      <view class="progress-container">
+        <view class="progress-bar" style="width: 55%"></view>
+      </view>
+    </view>
+    
+    <view class="stat-card">
+      <view class="stat-icon">
+        <image src="/assets/icons/list-check-solid.svg" mode="aspectFit" class="icon"></image>
+      </view>
+      <view class="stat-value">96个</view>
+      <view class="stat-label">完成任务数</view>
+      <view class="progress-container">
+        <view class="progress-bar" style="width: 75%"></view>
+      </view>
+    </view>
+    
+    <view class="stat-card">
+      <view class="stat-icon">
+        <image src="/assets/icons/chart-line-solid.svg" mode="aspectFit" class="icon"></image>
+      </view>
+      <view class="stat-value">82.5%</view>
+      <view class="stat-label">平均正确率</view>
+      <view class="progress-container">
+        <view class="progress-bar" style="width: 82.5%"></view>
+      </view>
+    </view>
   </view>
+
+  <!-- 分享按钮 -->
+  <button class="share-button" bindtap="shareReport" hover-class="button-hover">
+    <image src="/assets/icons/share-nodes-solid.svg" mode="aspectFit" class="share-icon"></image>
+    <text>{{shareButtonText}}</text>
+  </button>
 </view>

@@ -1,99 +1,174 @@
-/* pages/learningReport/index.wxss */
+/* ========== 页面容器 ========== */
 .container {
   padding: 20rpx;
-  background-color: #f4f8fb; /* 淡蓝色背景，与AI伴学页保持一致 */
+  background: #fff;
   min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ========== 标签栏 ========== */
+.tabs-container {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.103);
+  padding: 20rpx;
+  margin: 20rpx;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tabs {
+  display: flex;
+  white-space: nowrap;
+  padding: 10rpx 0;
+}
+
+.tab {
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border-radius: 40rpx;
+  margin-right: 16rpx;
+  color:black;
+  background: #f5f8ff;
+  border: 1rpx solid #e0e7ff;
+  flex-shrink: 0;
+}
+
+.tab.active {
+  background: linear-gradient(90deg, #1e88e5 0%, #1296db 100%);
+  color: #fff;
+  box-shadow: 0 4rpx 8rpx rgba(30, 136, 229, 0.3);
+}
+
+/* ========== 卡片统一样式（雷达图 + 数据统计卡片） ========== */
+.chart-card,
+.stat-card {
+  background: #fff;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 40rpx 30rpx;
+  margin: 20rpx 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ========== 雷达图区域 ========== */
+.chart-header {
+  margin-bottom: 30rpx;
+}
+
+.chart-title {
+  font-size: 36rpx;
+  font-weight: 600;
   color: #333;
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 30rpx;
-  padding: 20rpx 0;
-  background-color: #1296db; /* 主题蓝色 */
-  color: #ffffff;
-  border-radius: 16rpx;
-}
-
-.title {
-  font-size: 36rpx;
-  font-weight: bold;
-}
-
-.content {
-  background-color: #ffffff;
-  padding: 30rpx;
-  border-radius: 16rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-  margin-bottom: 30rpx;
-}
-
-.summary {
-  font-size: 28rpx;
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 30rpx;
-  display: block;
-}
-
-.data-section {
-  margin-bottom: 30rpx;
-}
-
-.section-title {
-  font-size: 30rpx;
-  font-weight: 500;
-  color: #1296db; /* 主题蓝色 */
-  margin-bottom: 20rpx;
-  padding-bottom: 10rpx;
-  border-bottom: 2rpx solid #e9f3fd; /* 淡蓝分隔线 */
-}
-
-.data-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.chart-subtitle {
   font-size: 26rpx;
-  padding: 15rpx 0;
-  border-bottom: 1rpx solid #f0f0f0; /* 更淡的分隔线 */
+  color: #999;
+  margin-top: 8rpx;
 }
 
-.data-item:last-child {
-  border-bottom: none;
+.chart-container {
+  height: 600rpx;
+  width: 100%;
 }
 
-.data-label {
-  color: #555;
+/* ========== 数据统计区 ========== */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+  padding: 0 20rpx;
+  margin-bottom: 30rpx;
 }
 
-.data-value {
-  color: #1296db; /* 主题蓝色 */
+.stat-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: #e6f4ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20rpx;
+}
+
+.stat-icon .icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.progress-container {
+  background: #999;
+  height: 8rpx;
+  border-radius: 4rpx;
+  margin-top: 20rpx;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #1e88e5 0%, #1296db 100%);
+}
+
+/* ========== 分享按钮 ========== */
+.share-button {
+  width: calc(100% - 40rpx);
+  margin: 0 20rpx 40rpx;
+  padding: 28rpx;
+  background: linear-gradient(90deg, #1e88e5 0%, #1296db 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50rpx;
+  font-size: 32rpx;
   font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-sizing: border-box;
 }
 
-.chart-placeholder {
-  text-align: center;
-  padding: 40rpx;
-  background-color: #e9f3fd; /* 淡蓝色占位背景 */
-  border-radius: 8rpx;
-  color: #1296db; /* 主题蓝色 */
-  font-size: 28rpx;
+.button-hover {
+  opacity: 0.9;
 }
 
-.footer {
-  text-align: center;
-  padding-top: 20rpx;
+.share-icon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 12rpx;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.share-button.van-button {
-  background-color: #1296db !important; /* 主题蓝色 */
-  border-color: #1296db !important; /* 主题蓝色 */
-  color: #ffffff !important;
-  width: 80%;
-}
+/* ========== 响应式样式 ========== */
+@media (max-width: 480px) {
+  .chart-container {
+    height: 400rpx;
+  }
 
-.share-button.van-button--plain {
-  background-color: transparent !important;
-  color: #1296db !important;
-  border: 1px solid #1296db !important;
+  .tab {
+    padding: 12rpx 24rpx;
+    font-size: 24rpx;
+  }
+
+  .tab-row {
+    display: flex;
+    flex-direction: row;
+  }
 }
