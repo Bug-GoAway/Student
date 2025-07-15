@@ -2,11 +2,13 @@
 Page({
   data: {
     messages: [],
-    isPanelOpen: false, // 控制滑动面板的打开状态
-    // showCameraIcon: true, // 此状态不再由此页面控制，由tabBar的特殊按钮样式决定
-    hasMoreMessages: true, // 是否还有更多消息可加载
-    isLoadingMore: false, // 是否正在加载更多
-    currentPage: 1, // 当前页码，用于分页加载
+    isPanelOpen: false,
+    hasMoreMessages: true,
+    isLoadingMore: false,
+    currentPage: 1,
+    searchText: "",
+    searchHistory: ["三角函数", "极值点偏移", "调和点对", "电磁感应", "热力学定律", "电桥效应"],
+    showHistory: false,
   },
 
   onLoad(options) {
@@ -14,44 +16,38 @@ Page({
   },
 
   onShow() {
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 2 // 2 表示学习对应的索引
+        selected: 2 
       })
     }
-    // 每次进入页面，如果面板是打开的，则关闭
     if (this.data.isPanelOpen) {
       this.setData({ isPanelOpen: false });
     }
   },
 
-  // 加载初始消息
   loadInitialMessages() {
     this.setData({ currentPage: 1, messages: [], hasMoreMessages: true });
     this.loadMoreMessages();
   },
 
-  // 加载更多消息（模拟分页）
   loadMoreMessages() {
     if (this.data.isLoadingMore || !this.data.hasMoreMessages) {
       return;
     }
     this.setData({ isLoadingMore: true });
 
-    // 模拟网络请求
     setTimeout(() => {
       const newMessages = this.generateMockMessages(this.data.currentPage, 5);
       this.setData({
         messages: this.data.messages.concat(newMessages),
         currentPage: this.data.currentPage + 1,
         isLoadingMore: false,
-        hasMoreMessages: newMessages.length > 0 && this.data.currentPage <= 3 // 假设最多3页数据
+        hasMoreMessages: this.data.currentPage < 3
       });
     }, 1000);
   },
 
-  // 生成模拟消息数据
   generateMockMessages(page, count) {
     const mockData = [
       { idSuffix: 'teacher', sender: '王老师', avatar: '/assets/images/teacher-avatar1.png', previewPrefix: '数学作业问题', unreadBase: 1 },
@@ -61,15 +57,18 @@ Page({
       { idSuffix: 'eng', sender: '英语老师', avatar: '/assets/images/teacher-avatar2.png', previewPrefix: '口语练习安排', unreadBase: 0 },
       { idSuffix: 'chem', sender: '化学兴趣小组', avatar: '/assets/images/group-avatar2.png', previewPrefix: '实验报告提交', unreadBase: 1 },
     ];
+    
+    const timestamp = Date.now();
     const messages = [];
+    
     for (let i = 0; i < count; i++) {
       const baseIndex = ((page - 1) * count + i) % mockData.length;
       const item = mockData[baseIndex];
       messages.push({
-        id: `chat${page}-${i}-${item.idSuffix}`,
+        id: `${timestamp}-${page}-${i}-${item.idSuffix}`,
         sender: item.sender,
         avatar: item.avatar,
-        time: `P${page} ${new Date().getHours()}:${new Date().getMinutes() - i}`,
+        time: `P${page} ${new Date().getHours()}:${new Date().getMinutes()}`,
         preview: `${item.previewPrefix} - 内容${(page-1)*count + i +1}`,
         unreadCount: Math.random() < 0.3 ? item.unreadBase + Math.floor(Math.random() * 3) : 0
       });
@@ -77,18 +76,15 @@ Page({
     return messages;
   },
 
-  // 页面滚动到底部时触发加载更多
   onReachBottom() {
     this.loadMoreMessages();
   },
 
-  // 下拉刷新
   onPullDownRefresh() {
     this.loadInitialMessages();
     wx.stopPullDownRefresh();
   },
 
-  // 点击消息，跳转到聊天页面
   navigateToChat(event) {
     const chatId = event.currentTarget.dataset.chatid;
     const senderName = event.currentTarget.dataset.sender;
@@ -105,27 +101,61 @@ Page({
     });
   },
 
-  // 切换滑动面板的显示/隐藏 (此方法由tabBar的特殊按钮触发，但面板状态仍在此页面管理)
   togglePanel() {
     this.setData({
       isPanelOpen: !this.data.isPanelOpen
     });
   },
 
-  // 点击滑动面板中的“拍照提问”或“文字提问”
-  handlePanelOption(event) {
-    const optionType = event.currentTarget.dataset.type;
-    console.log('选择了:', optionType);
-    // 关闭面板
-    this.setData({ isPanelOpen: false });
-    // 根据类型跳转到不同页面或执行不同操作
-    if (optionType === 'photo') {
-      wx.showToast({ title: '跳转到拍照提问', icon: 'none' });
-      // wx.navigateTo({ url: '/pages/askQuestion/photo/index' });
-    } else if (optionType === 'text') {
-      wx.showToast({ title: '跳转到文字提问', icon: 'none' });
-      // wx.navigateTo({ url: '/pages/askQuestion/text/index' });
+  toggleSearchBox() {
+    this.setData({
+      showHistory: !this.data.showHistory
+    });
+  },
+
+  onSearchInput(e) {
+    this.setData({
+      searchText: e.detail.value,
+      showHistory: true
+    });
+  },
+  
+  performSearch() {
+    const query = this.data.searchText.trim();
+    if (query) {
+      wx.showToast({
+        title: `搜索: ${query}`,
+        icon: "none"
+      });
+    } else {
+      wx.showToast({
+        title: "请输入搜索内容",
+        icon: "none"
+      });
     }
+  },
+
+  takePhoto() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['camera'],
+      success: (res) => {
+        wx.showToast({
+          title: '上传成功',
+          icon: 'success',
+          duration: 2000
+        });
+      },
+      fail: (err) => {
+        console.error('上传失败:', err);
+      }
+    });
+  },
+  
+  navigateBack() {
+    wx.navigateBack({
+      delta: 1
+    });
   }
-  // navigateToAskQuestion 方法不再需要，因为提问入口已集成到滑动面板中
 });

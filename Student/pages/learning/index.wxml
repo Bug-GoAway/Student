@@ -1,5 +1,6 @@
 <!--pages/learning/index.wxml-->
 <view class="learning-container">
+  
   <!-- 消息列表区域 -->
   <scroll-view scroll-y="true" class="message-list" bindscrolltolower="onReachBottom" 
                refresher-enabled="true" bindrefresherrefresh="onPullDownRefresh">
@@ -24,30 +25,30 @@
     </block>
     <block wx:else>
       <view class="empty-state">
-        <image class="empty-icon" src="/assets/images/empty-messages.png"></image> <!-- 替换为实际的空状态图片 -->
+        <image class="empty-icon" src="/assets/images/empty-messages.png"></image>
         <text class="empty-text">暂无新消息</text>
       </view>
     </block>
   </scroll-view>
 
-  <!-- 作业讲解提问入口 - 可滑动面板 -->
-  <!-- togglePanel方法现在由tabBar的特殊按钮触发，但面板的显示状态 (isPanelOpen) 仍由此页面的JS控制 -->
+  <!-- 作业讲解提问入口 - 修正后的可滑动面板 -->
   <view class="slide-panel {{isPanelOpen ? 'panel-open' : ''}}">
-    <view class="panel-handle" bindtap="togglePanel"> <!-- 用户仍可点击此区域关闭面板 -->
+    <view class="panel-handle" bindtap="togglePanel">
       <view class="handle-bar"></view>
     </view>
     <view class="panel-content">
-      <view class="ask-options">
-        <view class="option-button" bindtap="handlePanelOption" data-type="photo">
-          <image src="/assets/icons/camera-blue.png"></image> 
-          <text>拍照提问</text>
-        </view>
-        <view class="option-button" bindtap="handlePanelOption" data-type="text">
-          <image src="/assets/icons/text-edit-blue.png"></image> 
-          <text>文字提问</text>
-        </view>
+      <view class="search-box" bindtap="toggleSearchBox">
+        <input class="search-input" placeholder="请输入问题关键词" value="{{searchText}}" bindinput="onSearchInput" />
+        <image src="/assets/tabs/camera.png" class="camera-icon" bindtap="takePhoto" />
+        <view class="search-button" bindtap="performSearch">搜索</view>
       </view>
+      <block wx:if="{{showHistory}}">
+        <view class="search-history">
+          <block wx:for="{{searchHistory}}" wx:key="index">
+            <view class="history-item">{{item}}</view>
+          </block>
+        </view>
+      </block>
     </view>
   </view>
-  <!-- 旧的悬浮按钮已移除 -->
 </view>
