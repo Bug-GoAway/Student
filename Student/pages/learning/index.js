@@ -25,6 +25,13 @@ Page({
       this.setData({ isPanelOpen: false });
     }
   },
+  selectHistory(e) {
+    const keyword = e.currentTarget.dataset.keyword;
+    this.setData(
+      { searchText: keyword, showHistory: false },
+      () => this.performSearch(keyword)   // 填入后立即搜索
+    );
+  },
 
   loadInitialMessages() {
     this.setData({ currentPage: 1, messages: [], hasMoreMessages: true });

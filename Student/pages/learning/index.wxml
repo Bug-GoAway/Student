@@ -1,9 +1,10 @@
 <!--pages/learning/index.wxml-->
 <view class="learning-container">
-  
   <!-- 消息列表区域 -->
-  <scroll-view scroll-y="true" class="message-list" bindscrolltolower="onReachBottom" 
-               refresher-enabled="true" bindrefresherrefresh="onPullDownRefresh">
+  <scroll-view scroll-y="true" class="message-list" 
+               bindscrolltolower="onReachBottom" 
+               refresher-enabled="true" 
+               bindrefresherrefresh="onPullDownRefresh">
     <block wx:if="{{messages.length > 0}}">
       <view wx:for="{{messages}}" wx:key="id" class="message-item"
             bindtap="navigateToChat" data-chatid="{{item.id}}" data-sender="{{item.sender}}">
@@ -31,7 +32,7 @@
     </block>
   </scroll-view>
 
-  <!-- 作业讲解提问入口 - 修正后的可滑动面板 -->
+  <!-- 作业讲解提问入口 - 可滑动面板 -->
   <view class="slide-panel {{isPanelOpen ? 'panel-open' : ''}}">
     <view class="panel-handle" bindtap="togglePanel">
       <view class="handle-bar"></view>
@@ -42,10 +43,14 @@
         <image src="/assets/tabs/camera.png" class="camera-icon" bindtap="takePhoto" />
         <view class="search-button" bindtap="performSearch">搜索</view>
       </view>
+
+      <!-- 历史记录：点击自动填入 -->
       <block wx:if="{{showHistory}}">
         <view class="search-history">
           <block wx:for="{{searchHistory}}" wx:key="index">
-            <view class="history-item">{{item}}</view>
+            <view class="history-item" data-keyword="{{item}}" bindtap="selectHistory">
+              {{item}}
+            </view>
           </block>
         </view>
       </block>

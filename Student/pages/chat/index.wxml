@@ -1,12 +1,17 @@
 <!--pages/chat/index.wxml-->
+<navigation-bar
+  title="{{chatName}}"
+  background="#1296db"
+  color="#ffffff"
+  back="true"
+  home-button="false">
+</navigation-bar>
+
 <view class="chat-container">
-  <view class="chat-header">
-    <text class="chat-title">{{chatName}}</text>
-  </view>
   <scroll-view scroll-y="true" class="message-list" scroll-into-view="{{scrollToView}}">
     <block wx:for="{{messages}}" wx:key="id">
       <view id="msg-{{item.id}}" class="message-item {{item.isMe ? 'my-message' : 'other-message'}}">
-        <image class="avatar" src="{{item.isMe ? myAvatar : otherAvatar}}"></image>
+        <image class="avatar" src="{{item.isMe ? myAvatar : otherAvatar}}"/>
         <view class="message-content">
           <view class="nickname" wx:if="{{!item.isMe}}">{{chatName}}</view>
           <view class="text-bubble">{{item.content}}</view>
@@ -14,8 +19,9 @@
       </view>
     </block>
   </scroll-view>
+
   <view class="input-area">
-    <input class="input-field" type="text" placeholder="输入消息..." value="{{inputValue}}" bindinput="onInput" />
+    <input class="input-field" placeholder="输入消息..." value="{{inputValue}}" bindinput="onInput"/>
     <button class="send-button" bindtap="sendMessage">发送</button>
   </view>
 </view>

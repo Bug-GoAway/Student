@@ -1,33 +1,28 @@
 // pages/chat/index.js
 Page({
   data: {
-    chatName: '', // 聊天对象名称
-    messages: [], // 消息列表
-    inputValue: '', // 输入框内容
-    myAvatar: '/assets/images/my-avatar.png', // 替换为当前用户头像
-    otherAvatar: '/assets/images/default-avatar.png', // 替换为对方默认或实际头像
-    scrollToView: '' // 用于滚动到最新的消息
+    chatName: '',
+    messages: [],
+    inputValue: '',
+    myAvatar: '/assets/images/my-avatar.png',
+    otherAvatar: '/assets/images/default-avatar.png',
+    scrollToView: ''
   },
 
   onLoad(options) {
     const chatName = decodeURIComponent(options.name || '聊天');
-    const chatId = options.chatId;
+    const chatId   = options.chatId;
 
-    wx.setNavigationBarTitle({ title: chatName });
+    // 不再手动设置系统标题，交由 navigation-bar 组件
     this.setData({
-      chatName: chatName,
-      // 模拟加载历史消息
+      chatName,
       messages: this.loadInitialMessages(chatId),
-      // 根据chatId可以设置不同的对方头像
-      otherAvatar: this.getOtherAvatar(chatId) 
+      otherAvatar: this.getOtherAvatar(chatId)
     });
     this.scrollToBottom();
   },
 
-  // 模拟加载初始消息
   loadInitialMessages(chatId) {
-    // 根据chatId从后端或本地存储加载消息
-    // 这里是示例数据
     if (chatId === 'chat001') {
       return [
         { id: 1, content: '你好！上次的作业你看了吗？', isMe: false, time: '10:25' },
@@ -41,75 +36,55 @@ Page({
     ];
   },
 
-  // 根据chatId获取对方头像（示例）
   getOtherAvatar(chatId) {
     if (chatId === 'chat001') return '/assets/images/teacher-avatar1.png';
     if (chatId === 'chat002') return '/assets/images/group-avatar1.png';
     if (chatId === 'chat004') return '/assets/images/student-avatar1.png';
-    return '/assets/images/default-avatar.png'; // 默认头像
+    return '/assets/images/default-avatar.png';
   },
 
-  onInput(event) {
-    this.setData({
-      inputValue: event.detail.value
-    });
+  onInput(e) {
+    this.setData({ inputValue: e.detail.value });
   },
 
   sendMessage() {
-    if (this.data.inputValue.trim() === '') {
-      wx.showToast({
-        title: '消息不能为空',
-        icon: 'none'
-      });
+    if (!this.data.inputValue.trim()) {
+      wx.showToast({ title: '消息不能为空', icon: 'none' });
       return;
     }
-
-    const newMessage = {
-      id: this.data.messages.length + 1, // 简单ID生成，实际应使用更可靠方式
+    const newMsg = {
+      id: this.data.messages.length + 1,
       content: this.data.inputValue,
       isMe: true,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
-
     this.setData({
-      messages: [...this.data.messages, newMessage],
-      inputValue: '' // 清空输入框
+      messages: [...this.data.messages, newMsg],
+      inputValue: ''
     });
     this.scrollToBottom();
-
-    // 模拟对方回复
-    this.simulateReply(newMessage.content);
+    this.simulateReply(newMsg.content);
   },
 
-  // 模拟对方回复
   simulateReply(myMessageContent) {
     setTimeout(() => {
-      const replyContent = `已收到你的消息："${myMessageContent.substring(0,10)}..." 我稍后回复你。`;
-      const replyMessage = {
+      const replyMsg = {
         id: this.data.messages.length + 1,
-        content: replyContent,
+        content: `已收到你的消息："${myMessageContent.substring(0, 10)}..." 我稍后回复你。`,
         isMe: false,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-      this.setData({
-        messages: [...this.data.messages, replyMessage]
-      });
+      this.setData({ messages: [...this.data.messages, replyMsg] });
       this.scrollToBottom();
     }, 1000 + Math.random() * 1000);
   },
 
-  // 滚动到列表底部
   scrollToBottom() {
-    if (this.data.messages.length > 0) {
-      const lastMessageId = this.data.messages[this.data.messages.length - 1].id;
-      this.setData({
-        scrollToView: `msg-${lastMessageId}`
-      });
+    if (this.data.messages.length) {
+      const lastId = this.data.messages[this.data.messages.length - 1].id;
+      this.setData({ scrollToView: `msg-${lastId}` });
     }
   },
 
-  // 页面卸载时可以做一些清理工作
-  onUnload() {
-
-  }
+  onUnload() {}
 });
