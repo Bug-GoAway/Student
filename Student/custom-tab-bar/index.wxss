@@ -3,11 +3,13 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px; /* 根据实际需要调整高度 */
+  height: 70px;
   background: white;
   display: flex;
-  padding-bottom: env(safe-area-inset-bottom); /* 适配 iPhone X 等机型 */
+  padding-bottom: env(safe-area-inset-bottom);
   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+  overflow: visible; /* 允许内容溢出 */
+  z-index: 9999; /* 确保层级足够高 */
 }
 
 .tab-bar-border {
@@ -25,45 +27,61 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end; /* 内容靠底部 */
   align-items: center;
-  font-size: 10px; /* 根据实际需要调整字体大小 */
-  position: relative; /* 为特殊按钮定位 */
+  font-size: 10px;
+  padding-bottom: 15px; /* 增加底部内边距 */
+}
+
+.special-placeholder {
+  visibility: hidden; /* 保持占位但不可见 */
 }
 
 .tab-bar-icon {
-  width: 24px; /* 根据实际需要调整图标大小 */
+  width: 24px;
   height: 24px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
-/* 特殊按钮样式 */
-.special-item {
-  /* flex-grow: 1.2; /* 可以让特殊按钮稍微宽一点，如果需要的话 */
-  /* 不直接设置flex，通过其他方式让它“凸起” */
-}
-
-.special-icon-wrapper {
+/* 悬浮按钮容器 - 确保圆形背景常驻 */
+.study-float {
   position: absolute;
-  top: -25px; /* 向上偏移，使其突出 */
-  width: 60px; /* 设置宽度 */
-  height: 60px; /* 设置高度，与宽度相等以形成圆形 */
-  background-color: #ffffff; /* 按钮背景色 */
-  border-radius: 50%; /* 圆形按钮 */
+  left: 50%;
+  top: -20px; /* 调整位置确保圆形完整显示 */
+  transform: translateX(-50%);
+  z-index: 1000; /* 高于导航栏 */
+}
+
+/* 圆形背景 - 常驻样式 */
+.special-circle {
+  width: 60px;
+  height: 65px;
+  background: #ffffff;
+  border-radius: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* 添加更柔和的阴影 */
-  z-index: 10; /* 确保在其他元素之上 */
+  /* 常驻阴影效果 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* 平滑过渡效果 */
+  transition: all 0.3s ease;
+}
+
+/* 选中状态增强效果 */
+.special-circle[data-selected="true"] {
+  box-shadow: 0 6px 15px rgba(18, 150, 219, 0.4);
+  transform: scale(1.05);
 }
 
 .special-icon {
-  width: 35px; /* 增大特殊按钮图标大小 */
-  height: 35px;
+  width: 50px;
+  height: 50px;
+  transition: all 0.3s ease;
 }
 
 .special-text {
-  font-size: 11px; /* 稍微增大特殊按钮文字大小 */
-  margin-top: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }

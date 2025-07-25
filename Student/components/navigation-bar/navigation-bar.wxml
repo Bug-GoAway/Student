@@ -15,7 +15,10 @@
               aria-role="button"
               aria-label="返回"
             >
-              <view class="weui-navigation-bar__button weui-navigation-bar__btn_goback"></view>
+            <image class="back-arrow-img"
+       src="/assets/icons/back-arrow.png"
+       mode="aspectFit"
+       style="width:24px;height:24px;display:block;" />
             </view>
           </view>
         </block>
